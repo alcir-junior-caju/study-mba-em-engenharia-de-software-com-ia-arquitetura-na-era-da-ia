@@ -10,3 +10,4 @@
 ### Arquitetura na Era da IA
 
 - [Introdução](./01-introducao/resumo.md)
+- [Acoplamento](./02-acoplamento/resumo.md)
