@@ -11,3 +11,4 @@
 
 - [Introdução](./01-introducao/resumo.md)
 - [Acoplamento](./02-acoplamento/resumo.md)
+- [AI Gateways](./03-ai-gateways/resumo.md)
