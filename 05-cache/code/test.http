@@ -1,0 +1,53 @@
+# Demonstração do /tickets/analyze do zero.
+# Pré-requisitos: banco vazio (docker compose up -d) e servidor recém-subido
+# (python main.py). Rode os blocos de cima para baixo, na ordem.
+#
+# A cada requisição, observe o campo "source":
+#   ai_model       -> não tinha cache; chamou a IA e salvou no pgvector.
+#   exact_cache     -> mesma mensagem de antes; respondeu da memória.
+#   semantic_cache  -> mensagem parecida; respondeu do pgvector, sem IA.
+
+### 0. Garante o threshold padrão do cache semântico
+
+PUT http://localhost:8000/config
+Content-Type: application/json
+
+{
+  "semantic_cache_threshold": 0.9
+}
+
+### 1. Primeira mensagem: sem cache -> chama a IA e salva no pgvector (source=ai_model)
+
+POST http://localhost:8000/tickets/analyze
+Content-Type: application/json
+
+{
+  "message": "Quero cancelar meu plano"
+}
+
+### 2. Mesma mensagem: cache exato em memória (source=exact_cache)
+
+POST http://localhost:8000/tickets/analyze
+Content-Type: application/json
+
+{
+  "message": "Quero cancelar meu plano"
+}
+
+### 3. Mensagem parecida: cache semântico, sem chamar a IA (source=semantic_cache)
+
+POST http://localhost:8000/tickets/analyze
+Content-Type: application/json
+
+{
+  "message": "Preciso cancelar meu plano"
+}
+
+### 4. Mensagem diferente: sem candidato bom -> chama a IA e salva (source=ai_model)
+
+POST http://localhost:8000/tickets/analyze
+Content-Type: application/json
+
+{
+  "message": "Meu aplicativo está travando ao abrir"
+}
