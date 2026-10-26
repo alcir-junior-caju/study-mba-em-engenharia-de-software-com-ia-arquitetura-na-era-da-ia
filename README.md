@@ -14,3 +14,4 @@
 - [AI Gateways](./03-ai-gateways/resumo.md)
 - [Fluxos de Chamada](./04-fluxos-de-chamada/resumo.md)
 - [Cache](./05-cache/resumo.md)
+- [RAG](./06-rag/resumo.md)
